@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- Framework Properties -->
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <!-- Project Properties -->
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <!-- Generated File Properties -->
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <!-- Compiler Properties -->
+    <PropertyGroup>
+        <Nullale>enable</Nullale>
+    </PropertyGroup>
+
+</Project>
