@@ -12,7 +12,7 @@
 
     <!-- Generated File Properties -->
     <PropertyGroup>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
     </PropertyGroup>
 
     <!-- Compiler Properties -->

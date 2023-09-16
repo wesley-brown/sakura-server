@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1700.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sakura.Server", "src\Sakura.Server\Sakura.Server.csproj", "{F90E508F-468B-45D7-AC0D-5639B5EC4D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sakura.Server.Tests", "tests\Sakura.Server.Tests\Sakura.Server.Tests.csproj", "{B27B9866-4FEF-4367-9034-A86BA49F8641}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F90E508F-468B-45D7-AC0D-5639B5EC4D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F90E508F-468B-45D7-AC0D-5639B5EC4D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F90E508F-468B-45D7-AC0D-5639B5EC4D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B27B9866-4FEF-4367-9034-A86BA49F8641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B27B9866-4FEF-4367-9034-A86BA49F8641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B27B9866-4FEF-4367-9034-A86BA49F8641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B27B9866-4FEF-4367-9034-A86BA49F8641}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
