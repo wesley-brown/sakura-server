@@ -18,5 +18,17 @@ namespace Tick_Attribute_Spec
                 tickAttributeAttributeUsage!.ValidOn,
                 Is.EqualTo(AttributeTargets.Method));
         }
+
+        [Test]
+        public void cannot_be_applied_multiple_times()
+        {
+            var tickAttributeUsage =
+                (AttributeUsageAttribute?)Attribute.GetCustomAttribute(
+                    typeof(TickAttribute),
+                    typeof(AttributeUsageAttribute));
+            Assert.That(
+                tickAttributeUsage!.AllowMultiple,
+                Is.False);
+        }
     }
 }
