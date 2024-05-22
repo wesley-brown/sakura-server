@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Sakura.Server;
 
 namespace SakuraServer
 {
@@ -150,6 +151,20 @@ namespace SakuraServer
 
         private void TickSimulation()
         {
+            // Create and execute a script
+            var entityScriptType = Type.GetType("Sakura.Server.TestScript");
+            var entityScript = Activator.CreateInstance(entityScriptType);
+            var scriptMethods = entityScriptType.GetMethods();
+            foreach (var method in scriptMethods)
+            {
+                var tickAttributes = method.GetCustomAttributes(
+                    typeof(TickAttribute),
+                    false);
+                // There can only ever be one TickAttribute on a method, so if
+                // the length > 0, that method is this script's tick method
+                if (tickAttributes.Length > 0)
+                    method.Invoke(entityScript, null);
+            }
         }
 
         private static double HighResolutionTimeInSeconds()
