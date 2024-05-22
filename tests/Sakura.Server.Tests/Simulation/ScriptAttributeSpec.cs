@@ -18,5 +18,17 @@ namespace Script_Attribute_Spec
                 scriptAttributeAttributeUsage!.ValidOn,
                 Is.EqualTo(AttributeTargets.Class));
         }
+
+        [Test]
+        public void cannot_be_applied_multiple_times()
+        {
+            var scriptAttributeAttributeUsage =
+            (AttributeUsageAttribute?)Attribute.GetCustomAttribute(
+                typeof(ScriptAttribute),
+                typeof(AttributeUsageAttribute));
+            Assert.That(
+                scriptAttributeAttributeUsage!.AllowMultiple,
+                Is.False);
+        }
     }
 }

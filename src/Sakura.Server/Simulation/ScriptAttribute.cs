@@ -6,7 +6,8 @@ namespace Sakura.Server
     ///     Specifies that a class represents a script.
     /// </summary>
     [AttributeUsage(
-        AttributeTargets.Class)]
+        AttributeTargets.Class,
+        AllowMultiple = false)]
     public sealed class ScriptAttribute : Attribute
     {
 
