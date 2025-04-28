@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ namespace SakuraServer
     internal class Server
     {
         private bool running;
+        private readonly Dictionary<Guid, List<Script>> entityScripts = new();
 
         internal void Run()
         {
@@ -37,6 +40,8 @@ namespace SakuraServer
             {
                 await ReadConsoleInputAsync(cancellationToken);
             });
+
+            CreateScripts();
 
             while (running)
             {
@@ -149,21 +154,60 @@ namespace SakuraServer
             }
         }
 
+        private void CreateScripts()
+        {
+            var entityID = Guid.NewGuid();
+            var scriptType = Type.GetType("Sakura.Server.Script");
+            var types = scriptType.Assembly.GetTypes();
+            var scriptTypes = new List<Type>();
+            foreach (var type in types)
+            {
+                if (type.IsSubclassOf(scriptType))
+                    scriptTypes.Add(type);
+            }
+            var scripts = new List<Script>();
+            foreach (var script in scriptTypes)
+            {
+                var scriptInstance = (Script) Activator.CreateInstance(script);
+                var entity = new Entity
+                {
+                    ID = entityID.ToString(),
+                    Position = new float[3]{0, 0, 0},
+                };
+                script
+                    .GetField(
+                        "entity",
+                        BindingFlags.Instance | BindingFlags.NonPublic)
+                    .SetValue(
+                        scriptInstance,
+                        entity);
+
+                scripts.Add(scriptInstance);
+            }
+            entityScripts.Add(
+                entityID,
+                scripts);
+        }
+
         private void TickSimulation()
         {
-            // Create and execute a script
-            var entityScriptType = Type.GetType("Sakura.Server.TestScript");
-            var entityScript = Activator.CreateInstance(entityScriptType);
-            var scriptMethods = entityScriptType.GetMethods();
-            foreach (var method in scriptMethods)
+            // Execute scriprts on our single entity
+            foreach (var pair in entityScripts)
             {
-                var tickAttributes = method.GetCustomAttributes(
-                    typeof(TickAttribute),
-                    false);
-                // There can only ever be one TickAttribute on a method, so if
-                // the length > 0, that method is this script's tick method
-                if (tickAttributes.Length > 0)
-                    method.Invoke(entityScript, null);
+                foreach (var script in pair.Value)
+                {
+                    var scriptMethods = script.GetType().GetMethods();
+                    foreach (var method in scriptMethods)
+                    {
+                        var tickAttributes = method.GetCustomAttributes(
+                            typeof(TickAttribute),
+                            false);
+                        // There can only ever be one TickAttribute on a method, so if
+                        // the length > 0, that method is this script's tick method
+                        if (tickAttributes.Length > 0)
+                            method.Invoke(script, null);
+                    }
+                }
             }
         }
 
